@@ -1,10 +1,17 @@
+
+
 import pathlib
 import time
-
 import requests
 from rich.console import Console
 
-cookie = pathlib.Path("cookie.txt").read_text().strip()
+# Specify the path to the parent directory
+cookie_path = pathlib.Path(__file__).parent / "cookie.txt"
+
+if not cookie_path.exists():
+    raise FileNotFoundError("cookie.txt file not found in the parent directory. Please ensure it's there.")
+
+cookie = cookie_path.read_text().strip()
 
 session = requests.Session()
 session.cookies.update({".ROBLOSECURITY": cookie})
